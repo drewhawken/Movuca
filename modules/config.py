@@ -20,7 +20,7 @@ class Config(object):
         if self.ongae:
             self._db = DAL("google:datastore")
         else:
-            self._db = DAL("sqlite://config_movuca.sqlite")
+            self._db = DAL("mysql://root@127.0.0.1/config_movuca")
 
         self.define_tables()
         if autogetconfig:

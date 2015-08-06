@@ -10,7 +10,7 @@ class Setup(object):
     def __init__(self):
         T = current.T
         self.db_options = [
-            Field("uri", "string", notnull=True, default="sqlite://movuca.sqlite"),
+            Field("uri", "string", notnull=True, default="mysql://root@127.0.0.1/movuca"),
             Field("migrate", "boolean", notnull=True, default=True),
             Field("migrate_enabled", "boolean", notnull=True, default=True),
             Field("pool_size", "integer", notnull=True, default=10),
@@ -27,26 +27,26 @@ class Setup(object):
 
         self.auth_options = [
             Field("formstyle", "string", notnull=True, default="divs"),
-            Field("photo_source", "list:string", notnull=True, default=["1:upload", "2:gravatar", "3:facebook", "4:twitter", "5:no photo", "6:Google"]),
-            Field("gender", "list:string", notnull=True, default=["Male:Male", "Female:Female", "Not specified:Not specified"]),
-            Field("privacy", "list:string", notnull=True, default=["1:Public", "2:Visible only for contacts"]),
+            Field("photo_source", "string", notnull=True, default=["1:upload", "2:gravatar", "3:facebook", "4:twitter", "5:no photo", "6:Google"]),
+            Field("gender", "string", notnull=True, default=["Male:Male", "Female:Female", "Not specified:Not specified"]),
+            Field("privacy", "string", notnull=True, default=["1:Public", "2:Visible only for contacts"]),
             Field("use_facebook", "boolean", notnull=True, default=True),
-            Field("facebook", "list:string", notnull=True, default=["id:133622423420992",
+            Field("facebook", "string", notnull=True, default=["id:133622423420992",
                                                                      "secret:6b0880726a21a89dfcb07c19c7807817",
                                                                      "admins:1766038844"]),
             Field("use_google", "boolean", notnull=True, default=True),
-            Field("google", "list:string", notnull=True, default=["id:908928538602.apps.googleusercontent.com",
+            Field("google", "string", notnull=True, default=["id:908928538602.apps.googleusercontent.com",
                                                                   "secret:HH6ITKRWOkhS-prHliD21weA",
                                                                   "xoauth_displayname:Movuca Social CMS",
                                                                   "redirect_scheme:http", "redirect_uri:movu.ca/demo/person/google/login",
                                                                   "approval_prompt:force"]),
             Field("use_recaptcha", "boolean", notnull=True, default=True),
-            Field("recaptcha", "list:string", notnull=True, default=["public:6Ld9QswSAAAAAN1DlVBEOxFkMGsFytzSZ54v1nur",
+            Field("recaptcha", "string", notnull=True, default=["public:6Ld9QswSAAAAAN1DlVBEOxFkMGsFytzSZ54v1nur",
                                                                      "private:6Ld9QswSAAAAAIzXZXJQmxKKaDS5AMrCA1Cnq5ut",
                                                                      "theme:clean",
                                                                      "lang:en"]),
             Field("use_mailhide", "boolean", notnull=True, default=True),
-            Field("mailhide", "list:string", notnull=True, default=["public:01_qmBPgGX5nvV1rYv_bxK4A==",
+            Field("mailhide", "string", notnull=True, default=["public:01_qmBPgGX5nvV1rYv_bxK4A==",
                                                                     "private:37565e87d8f80bd680afbc31e0d4e3df"]),
             Field("registration_requires_verification", "boolean", notnull=True, default=False),
             Field("registration_requires_approval", "boolean", notnull=True, default=False),
@@ -68,7 +68,7 @@ class Setup(object):
         ]
 
         self.article_options = [
-            Field("license", "list:string", notnull=True, default=["1:All rights reserved", "2:Public domain", "3:Creative Commons"]),
+            Field("license", "string", notnull=True, default=["1:All rights reserved", "2:Public domain", "3:Creative Commons"]),
             Field("setuptime", "datetime", notnull=True),
         ]
 
@@ -121,8 +121,8 @@ class Setup(object):
         notification_ways = ["site:site notifications", "email:e-mail"]
 
         self.notification_options = [
-          Field("event", "list:string", default=notification_events, notnull=True),
-          Field("way", "list:string", default=notification_ways, notnull=True),
+          Field("event", "string", default="new_contact:%s followed you %s", notnull=True),
+          Field("way", "string", default="email:e-mail", notnull=True),
           Field("worker", "string", default="site", comment="site or scheduler"),
           Field("setuptime", "datetime", notnull=True),
         ]
